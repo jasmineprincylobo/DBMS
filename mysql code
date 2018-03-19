@@ -1,0 +1,105 @@
+*************Steps S#to create new user in mysql******************************
+To use the cookingRecipe db follow these steps
+*************
+mysql -u jaslobo -p -h localhost
+Enter password: jas
+use  cookingRecipe;
+create tables.............
+***********
+ 	
+
+I solved in this way: I logged in with root username
+
+mysql -u root -p -h localhost
+
+I created a new user with
+
+CREATE USER 'francesco'@'localhost' IDENTIFIED BY 'some_pass';
+
+*****CREATE USER 'jaslobo'@'localhost' identified by 'jas';
+
+****  username:jaslobo
+      password:jas   *********
+then I created the database
+'
+CREATE DATABASE shop;
+***** create database cookingRecipe;
+Query OK, 1 row affected (0.00 sec)
+
+
+
+I granted privileges for new user for this database
+
+GRANT ALL PRIVILEGES ON shop.* TO 'francesco'@'localhost';
+
+Then I logged out root and logged in new user
+
+quit;
+mysql -u francesco -p -h localhost
+
+I rebuilt my database using a script
+
+source shop.sql;
+
+
+And that's it.. Now from php works without problems with the call
+
+ $conn = new mysqli("localhost", "francesco", "some_pass", "shop");
+
+Thanks to all for your time :)
+
+
+
+
+
+ mysql -u root -p -h localhost;
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 31
+Server version: 5.7.20 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create user 'jasl'@'localhost' identified by 'some_pass';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create database eg;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON eg.* to 'jasl'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> quit;
+Bye
+jasmine@princy:~$ mysql -u jasl -p -h localhost
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'jasl'@'localhost' (using password: YES)
+jasmine@princy:~$ mysql -u jasl -p -h localhost
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'jasl'@'localhost' (using password: YES)
+jasmine@princy:~$ mysql -u jasl -p -h localhost;
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 5.7.20 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> source eg.sql;
+ERROR: 
+Failed to open file 'eg.sql', error: 2
+mysql> select * from users;^C
+mysql> 
+
